@@ -1,5 +1,5 @@
 // Bump CACHE when you change index.html so users get the new version.
-const CACHE = 'harar-tour-v5';
+const CACHE = 'harar-tour-v6';
 const FILES = ['./', './index.html', './manifest.json',
   './icon-192.png', './icon-512.png', './icon-maskable-512.png'];
 
@@ -16,7 +16,7 @@ self.addEventListener('activate', e => {
 
 // Network first (fresh content online), cache fallback (works offline).
 self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
+  if (e.request.method !== 'GET' || e.request.headers.has('range')) return;
   const url = new URL(e.request.url);
   if (url.origin !== location.origin) return; // let WhatsApp etc. links go through
   e.respondWith(
